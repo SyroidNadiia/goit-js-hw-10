@@ -18,7 +18,7 @@ function onInputCountry(event) {
 
   fetchCountries(seachQuery)
     .then(res => {
-      console.log(res);
+      // console.log(res);
       if (res.length > 10) {
         Notiflix.Notify.info(
           'Too many matches found. Please enter a more specific name.'
@@ -48,14 +48,11 @@ function renderCountrisName(seachQuery) {
 function renderCountryInfo(country) {
   const markupCountry = country
     .map(({ capital, population, languages }) => {
-      
       return `<p>Capital: ${capital}</p>
       <p>Population: ${population}</p>
       <ul class="list-languages">
-      {{#each languages}}
-      <li>{{language}}</li>
-      {{/each}}
-      </ul>`
+      <li>${Object.values(languages).join(', ')}</li>
+      </ul>`;
     })
     .join('');
   countryInfoEl.innerHTML = markupCountry;

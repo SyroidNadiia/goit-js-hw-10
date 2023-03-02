@@ -16,6 +16,11 @@ inputEl.addEventListener('input', debounce(onInputCountry, DEBOUNCE_DELAY));
 function onInputCountry(event) {
   seachQuery = event.target.value.trim();
 
+  if (!seachQuery) {
+    onClearData();
+    return;
+  }
+
   fetchCountries(seachQuery)
     .then(res => {
       if (res.length > 10) {
@@ -36,6 +41,7 @@ function onInputCountry(event) {
 }
 
 function renderCountrisName(seachQuery, fontSize) {
+  onClearData();
   const markup = seachQuery
     .map(({ name, flags }) => {
       return `<li class = "country-item"><img class = "country-img" src="${flags.svg}" alt="${flags.alt}"><span style="font-size: ${fontSize}px">${name.common}</span></li>`;
@@ -55,4 +61,9 @@ function renderCountryInfo(country) {
     })
     .join('');
   countryInfoEl.innerHTML = markupCountry;
+}
+
+function onClearData() {
+  countryListEl.innerHTML = '';
+  countryInfoEl.innerHTML = '';
 }

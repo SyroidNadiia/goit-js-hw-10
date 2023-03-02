@@ -35,3 +35,10 @@ body {
   height: auto;
   background-size: contain;
 }
+
+.list-languages {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 4px;
+}

@@ -18,7 +18,6 @@ function onInputCountry(event) {
 
   fetchCountries(seachQuery)
     .then(res => {
-      // console.log(res);
       if (res.length > 10) {
         Notiflix.Notify.info(
           'Too many matches found. Please enter a more specific name.'
@@ -26,20 +25,20 @@ function onInputCountry(event) {
         return;
       }
       if (res.length >= 2 && seachQuery.length <= 10) {
-        renderCountrisName(res);
+        renderCountrisName(res, 20);
       }
       if (res.length === 1) {
-        renderCountrisName(res);
+        renderCountrisName(res, 34);
         renderCountryInfo(res);
       }
     })
     .catch(error => console.log(error));
 }
 
-function renderCountrisName(seachQuery) {
+function renderCountrisName(seachQuery, fontSize) {
   const markup = seachQuery
     .map(({ name, flags }) => {
-      return `<li class = "country-item"><img class = "country-img" src="${flags.svg}" alt="${flags.alt}"><span>${name.common}</span></li>`;
+      return `<li class = "country-item"><img class = "country-img" src="${flags.svg}" alt="${flags.alt}"><span style="font-size: ${fontSize}px">${name.common}</span></li>`;
     })
     .join('');
   countryListEl.innerHTML = markup;
@@ -48,9 +47,9 @@ function renderCountrisName(seachQuery) {
 function renderCountryInfo(country) {
   const markupCountry = country
     .map(({ capital, population, languages }) => {
-      return `<p>Capital: ${capital}</p>
-      <p>Population: ${population}</p>
-      <ul class="list-languages">
+      return `<p><b>Capital:</b> ${capital}</p>
+      <p><b>Population</b>: ${population}</p>
+      <ul class="list-languages"><b>Languages:</b> 
       <li>${Object.values(languages).join(', ')}</li>
       </ul>`;
     })
